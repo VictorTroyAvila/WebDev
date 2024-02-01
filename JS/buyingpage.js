@@ -1,12 +1,13 @@
 
+
 let listProductHTML = document.querySelector('.itemlist'); //selects the itemlist class
-let cartProducts = [
-   
-]; // I WILL USE LATER
+
+let cartProducts = cartItem;
 
 
 //const because the formula never changes
-const addDataToHTML= () => {
+const putDataToHTML= () => {
+    listProductHTML.innerHTML = '';
     if (cartProducts.length > 0) {
         cartProducts.forEach(product => {
             /*Creates a div class based based on the files from the json file
@@ -31,28 +32,11 @@ const addDataToHTML= () => {
         listProductHTML.appendChild(emptyMessage);
     }
     
-
-function openSideBar(){
-    var showsidebar = document.getElementById("sidebar");
     
-
-if (showsidebar.style.display === "none") 
-{
-showsidebar.style.display = "flex";
-document.getElementById("sidebarlogo").innerHTML = "✖";
-
-
-} else 
-
-{
-showsidebar.style.display = "none";
-document.getElementById("sidebarlogo").innerHTML = "☰";
 }
 
-}
 
-/*Today I learned, functions do not activate automatically
-You want this function to activate automatically? Put it in the initapp function! */
+
 const updateTotalPrice = () => {
     let totalPrice = cartProducts.reduce((total, product) => total + product.price, 0);
     document.getElementById('price').innerHTML = `$${totalPrice.toFixed(2)}`;
@@ -69,11 +53,22 @@ const getNumberOfItems = () => {
 
 
 
+
+const runOnStart = async () => {
     
-}
+        putDataToHTML(); // Call addDataToHTML after fetching the data
+        updateTotalPrice();
+        getNumberOfItems();
+    
+};
+
+runOnStart();
+
 //confirms purchase first before checkout
  function confirmPurchase() {
+    console.log(cartProducts)
     if (confirm("Are you sure you want to proceed with your purchase? Double check your cart before proceeding with the transaction")) {
-        
+        clearCart();
+        putDataToHTML();
     } 
  }
